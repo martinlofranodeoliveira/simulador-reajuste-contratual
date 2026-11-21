@@ -6,7 +6,7 @@ Explore uma sequência de índices fictícios e exporte a memória aritmética, 
 
 Abra a [demonstração](https://martinlofranodeoliveira.github.io/simulador-reajuste-contratual/). Para uso local, execute `python3 -m http.server 8000` no diretório e abra `http://localhost:8000`.
 
-Informe baseCents (centavos inteiros) e periods (lista com id e rateBps). Por exemplo, rateBps 250 significa 2,5%.
+Informe o valor inicial em reais e adicione os índices percentuais na ordem dos períodos. Clique em **Simular reajuste** para ver a trajetória e a memória de cálculo. **Baixar relatório** exporta as linhas em CSV.
 
 ## Contrato público
 

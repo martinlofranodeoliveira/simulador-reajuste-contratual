@@ -1,45 +1,55 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; worker-src 'self'; connect-src 'none'; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
-<title>Simulador de Reajuste Contratual</title>
-<link rel="stylesheet" href="./style.css"><script type="module" src="./app.mjs"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; worker-src 'self'; connect-src 'none'; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Simulador de Reajuste Contratual</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
 </head>
-<body>
-<a class="skip" href="#editor">Ir para a ferramenta</a>
-<main>
-  <header><p class="brand"><span></span> LOFRANO <small>Laboratório de software</small></p>
-    <div class="hero"><p class="sector">Planejamento de contratos</p><h1>Simulador de Reajuste Contratual</h1><p>Explore uma sequência de índices fictícios e exporte a memória aritmética, com valores em centavos.</p></div>
-  </header>
-  <div class="workspace">
-    <section class="panel">
-      <h2>Dados de entrada</h2>
-      <p class="help" id="instructions">Informe baseCents (centavos inteiros) e periods (lista com id e rateBps). Por exemplo, rateBps 250 significa 2,5%.</p>
-      
-      <label for="editor">Dados em JSON</label>
-      <textarea id="editor" spellcheck="false" rows="15" aria-describedby="instructions">{
-  &quot;baseCents&quot;: 10000,
-  &quot;periods&quot;: [
-    {
-      &quot;id&quot;: &quot;p1&quot;,
-      &quot;rateBps&quot;: 1000
-    },
-    {
-      &quot;id&quot;: &quot;p2&quot;,
-      &quot;rateBps&quot;: -1000
-    }
-  ]
-}</textarea>
-      <div class="buttons"><button type="button" id="run">Conferir dados</button><button type="button" id="reset" class="quiet">Restaurar exemplo</button></div>
-    </section>
-    <section class="panel output" aria-labelledby="output-title">
-      <div class="top"><h2 id="output-title">Resultado</h2><button type="button" id="download" class="quiet" disabled>Exportar JSON</button></div>
-      <p role="status" id="status">Execute a ferramenta para conferir os dados.</p>
-      <dl id="stats"></dl><div id="result"></div>
-    </section>
-  </div>
-  <footer>Exemplo fictício. O processamento acontece neste navegador. Conferências técnicas apoiam o trabalho da equipe responsável.</footer>
-</main>
+<body data-layout="reajuste">
+  <a class="skip" href="#entry-form">Ir para a ferramenta</a>
+  <main data-layout-profile="simulador-reajuste-contratual" data-layout="reajuste">
+    <header class="task-header" data-region="task-header">
+      <div class="masthead">
+        <a href="https://lofranotecnologia.com.br/projetos" class="brand" aria-label="Projetos da LOFRANO">LOFRANO</a>
+        <span class="product-sector">Planejamento de contratos</span>
+      </div>
+      <div class="task-title">
+        <h1>Simulador de Reajuste Contratual</h1>
+        <p>Explore uma sequência de índices fictícios e exporte a memória aritmética, com valores em centavos.</p>
+      </div>
+    </header>
+    <div class="workarea">
+      <section class="entry-panel" data-region="input" data-task-editor="reajuste" aria-labelledby="entry-title">
+        <div class="module-heading">
+          <h2 id="entry-title">Valor e índices</h2>
+          <button type="button" id="reset" class="quiet reset">Restaurar exemplo</button>
+        </div>
+        <form id="entry-form" class="editor-form" aria-labelledby="entry-title" tabindex="-1">
+          <div id="fields"></div>
+        </form>
+        <div class="entry-actions">
+          <button type="button" id="run" class="primary">Simular reajuste</button>
+        </div>
+      </section>
+      <section class="result-panel" data-region="result" aria-labelledby="output-title">
+        <div class="result-header">
+          <div class="module-heading">
+            <h2 id="output-title">Evolução do valor</h2>
+            <button type="button" id="download" class="quiet export" disabled>Baixar relatório</button>
+          </div>
+          <p role="status" id="status">Acompanhe como o valor do contrato muda a cada período.</p>
+        </div>
+        <dl id="stats" aria-label="Resumo de memória de cálculo"></dl>
+        <div id="insights" data-region="insights" data-task-insights="reajuste"></div>
+        <div id="result" data-region="result-details" tabindex="0" role="region" aria-labelledby="output-title"></div>
+      </section>
+    </div>
+    <footer class="task-footer">Exemplo fictício. O processamento acontece neste navegador.</footer>
+  </main>
+  <template id="sample-data">{"baseCents":10000,"periods":[{"id":"p1","rateBps":1000},{"id":"p2","rateBps":-1000}]}</template>
+  <template id="field-config">[{"key":"baseCents","label":"Valor inicial (R$)","kind":"money","optional":false},{"key":"periods","label":"Índices por período","singular":"período","fields":[{"key":"id","label":"Período","kind":"text","optional":false},{"key":"rateBps","label":"Reajuste (%)","kind":"percent","optional":false}],"maximum":150}]</template>
 </body>
 </html>
